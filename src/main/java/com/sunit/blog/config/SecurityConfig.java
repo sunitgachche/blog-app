@@ -1,5 +1,6 @@
 package com.sunit.blog.config;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,17 +22,16 @@ import com.sunit.blog.security.CustomUserDetailService;
 import com.sunit.blog.security.JwtAuthenticationEntryPoint;
 import com.sunit.blog.security.JwtAuthenticationFilter;
 
+
+
+
 @Configuration
 @EnableWebSecurity
 @EnableWebMvc
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-	public static final String[] PUBLIC_URLS = { "/api/v1/auth/**", "/v3/api-docs", "/v2/api-docs", "/api/users/create",
-			"/Swagger-resources/**", "Swagger-ui/**", "webjars/**","HttpMethod.GET",
-			"/swagger-ui.html"
-
-	};
+	
 
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
@@ -48,16 +48,16 @@ public class SecurityConfig {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	
+	//.requestMatchers(org.springframework.http.HttpMethod.GET).permitAll()
+	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
-				.authorizeHttpRequests(auth -> auth.requestMatchers(PUBLIC_URLS).permitAll()
-
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/v3/api-docs").permitAll()
 						
-						
-						
-
+						.requestMatchers("/api/v1/auth/**").permitAll()
 						.anyRequest().authenticated())
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -73,15 +73,15 @@ public class SecurityConfig {
 		return provider;
 	}
 
-	@Bean
-	public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-		return http.getSharedObject(AuthenticationManagerBuilder.class).build();
-	}
+	
 
+	
+	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception {
 		return builder.getAuthenticationManager();
 
 	}
+	
 	
 	
 

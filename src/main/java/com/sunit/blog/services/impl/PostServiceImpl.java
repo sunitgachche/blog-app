@@ -27,7 +27,7 @@ import com.sunit.blog.repositories.UserRepo;
 import com.sunit.blog.services.PostService;
 
 @Service
-@Transactional
+//@Transactional
 public class PostServiceImpl implements PostService {
 	
 	@Autowired
@@ -139,9 +139,9 @@ public class PostServiceImpl implements PostService {
 		return postDtos;
 	}
 
-	private Object modelMapper(Post post, Class<PostDto> class1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/*
+	 * private Object modelMapper(Post post, Class<PostDto> class1) { // TODO
+	 * Auto-generated method stub return null; }
+	 */
 
 }
